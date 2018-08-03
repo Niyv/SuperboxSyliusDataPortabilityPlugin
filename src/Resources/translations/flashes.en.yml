@@ -1,0 +1,3 @@
+superbox:
+    data_portability:
+        success: 'If the email you have specified exists in our system, we have sent there all stored personal data relevant to it.'

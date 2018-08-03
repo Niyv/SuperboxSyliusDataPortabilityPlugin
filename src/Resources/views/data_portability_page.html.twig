@@ -1,0 +1,14 @@
+{% extends '@SyliusShop/layout.html.twig' %}
+
+{% block content %}
+    <html>
+    <body>
+    <div>
+        <h3>{{ 'superbox.data_portability.request_a_copy_of_your_personal_data_by_filling_in_your_email' | trans }}</h3>
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        {{ form_end(form) }}
+    </div>
+    </body>
+    </html>
+{% endblock %}
