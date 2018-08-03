@@ -1,0 +1,11 @@
+superbox_sylius_data_portability_page:
+    path: /data-portability/
+    defaults:
+        _controller: SuperboxDataPortabilityPlugin:DataPortability:DataPortability
+        name: ~
+
+superbox_sylius_data_portability_success_page:
+    path: /data-portability-success/
+    defaults:
+        _controller: SuperboxDataPortabilityPlugin:DataPortability:DataPortability
+        name: ~

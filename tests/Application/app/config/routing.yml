@@ -1,0 +1,10 @@
+sylius:
+    resource: "../../../../vendor/sylius/sylius/app/config/routing.yml"
+
+# Put your own routes here
+
+superbox_sylius_data_portability_plugin_shop:
+    resource: "@SuperboxDataPortabilityPlugin/Resources/config/shop_routing.yml"
+    prefix: /{_locale}
+    requirements:
+        _locale: ^[a-z]{2}(?:_[A-Z]{2})?$
