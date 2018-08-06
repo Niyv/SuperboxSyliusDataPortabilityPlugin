@@ -1,3 +1,5 @@
 superbox:
     data_portability:
-        request_a_copy_of_your_personal_data_by_filling_in_your_email: Request a copy of your personal data by filling in your Email.
+        ui:
+          request_data: Request Data
+          request_a_copy_of_your_personal_data_by_filling_in_your_email: Request a copy of your personal data by filling in your Email.

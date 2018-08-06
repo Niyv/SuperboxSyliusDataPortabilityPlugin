@@ -12,25 +12,29 @@ declare(strict_types=1);
 namespace Superbox\SyliusDataPortabilityPlugin\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Validator\Constraints\Email;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 final class DataPortabilityController extends Controller
 {
     /**
-     * @param string|null $name
-     *
      * @return Response
      */
     public function dataPortabilityAction(Request $request)
     {
         $defaultData = array();
 
-        $form = $this->createFormBuilder($defaultData)
-            ->add('email', EmailType::class)
+       $form = $this->createFormBuilder($defaultData)
+            ->add('email', EmailType::class, array(
+                'constraints' => array(
+                    new NotBlank(),
+                    new Email()
+                )
+            ))
             ->add('send', SubmitType::class)
             ->getForm();
 
