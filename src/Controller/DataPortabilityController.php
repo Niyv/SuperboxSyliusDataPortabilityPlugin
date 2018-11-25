@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 namespace Superbox\SyliusDataPortabilityPlugin\Controller;
 
+use Superbox\SyliusDataPortabilityPlugin\Services\DataAggregator;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -18,6 +19,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotBlank;
+
+use Sylius\Component\Resource\Repository\RepositoryInterface;
 
 final class DataPortabilityController extends Controller
 {
@@ -28,7 +31,7 @@ final class DataPortabilityController extends Controller
     {
         $defaultData = array();
 
-       $form = $this->createFormBuilder($defaultData)
+        $form = $this->createFormBuilder($defaultData)
             ->add('email', EmailType::class, array(
                 'constraints' => array(
                     new NotBlank(),
@@ -42,10 +45,10 @@ final class DataPortabilityController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            // $task = $form->getData();
-            // TBD - Get Data
-            // TBD - Send Email with Data
-            // return new JsonResponse($task);
+           // $userData = $this->collectData($form->getData()['email']);
+            // Transform and send data
+            $dataAggregator = $this->get('app.services.data_aggregator');
+            $userData = $dataAggregator->collectData($form->getData()['email']);
 
             $this->addFlashMessage('success','superbox.data_portability.success');
         }

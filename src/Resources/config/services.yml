@@ -1,0 +1,7 @@
+services:
+  app.services.data_aggregator:
+    class: Superbox\SyliusDataPortabilityPlugin\Services\DataAggregator
+    public: true
+    arguments:
+      - '@doctrine.orm.entity_manager'
+      - '@service_container'
