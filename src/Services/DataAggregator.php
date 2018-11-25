@@ -60,7 +60,7 @@ class DataAggregator
             $userData['payments'] = $repositories['payment']->findBy(['order' => $userData['orders']]);
             $userData['reviews'] = $repositories['product_review']->findBy(['author' => $userData['customer']]);
             // Add reviewed product for reference
-        }
+
 
         $whitelist = array(
             'email',
@@ -82,7 +82,8 @@ class DataAggregator
         );
 
         $filteredData = array();
-        $fp = fopen('file.csv', 'w');
+
+        $fp = fopen($email.'.csv', 'w');
         foreach($userData as $key => $tableData){
             $tableName = array($key);
             fputcsv($fp, $tableName);
@@ -92,13 +93,14 @@ class DataAggregator
                $intersectLine = array_intersect($whitelist, array_flip($filteredData[$key]));
             }
             fputcsv($fp, $intersectLine);
+           if (isset($filteredData[$key]))  {
             fputcsv($fp, $filteredData[$key]);
+           }
         }
         fclose($fp);
 
-        die();
 
-        return ($userData);
+        }
     }
 
     private function findRepository(string $repositoryName): RepositoryInterface

@@ -72,3 +72,12 @@ liip_imagine:
             web_path:
                 web_root: "%kernel.project_dir%/web"
                 cache_prefix: "media/cache"
+
+sylius_mailer:
+    sender:
+        name: My website
+        address: no-reply@my-website.com
+    emails:
+        data_portability:
+            subject: Data Portability
+            template: '@SuperboxDataPortabilityPlugin/Resources/views/Email/data_portability.html.twig'

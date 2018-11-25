@@ -48,7 +48,12 @@ final class DataPortabilityController extends Controller
            // $userData = $this->collectData($form->getData()['email']);
             // Transform and send data
             $dataAggregator = $this->get('app.services.data_aggregator');
-            $userData = $dataAggregator->collectData($form->getData()['email']);
+            $dataAggregator->collectData($form->getData()['email']);
+
+            if (file_exists($form->getData()['email'].'.csv')) {
+                $this->get('sylius.email_sender')->send('data_portability', array($form->getData()['email']), array(), array($form->getData()['email'] . '.csv'));
+             #   unlink($form->getData()['email'].'.csv');
+            }
 
             $this->addFlashMessage('success','superbox.data_portability.success');
         }
