@@ -4,40 +4,20 @@
     </a>
 </p>
 
-<h1 align="center">Plugin Skeleton</h1>
+<h1 align="center">Data Portability Plugin</h1>
 
-<p align="center">Skeleton for starting Sylius plugins.</p>
+<p align="center">Out-of-the-box Plugin Solution for GDPR Compliance.</p>
 
 ## Installation
 
-1. Run `composer create-project sylius/plugin-skeleton ProjectName`.
-
-2. From the plugin skeleton root directory, run the following commands:
-
-    ```bash
-    $ (cd tests/Application && yarn install)
-    $ (cd tests/Application && yarn run gulp)
-    $ (cd tests/Application && bin/console assets:install web -e test)
-    
-    $ (cd tests/Application && bin/console doctrine:database:create -e test)
-    $ (cd tests/Application && bin/console doctrine:schema:create -e test)
-    ```
+1. Run `composer require superbox/sylius-data-portability-plugin
 
 ## Usage
 
+This is an out-of-the-box basic plugin for Sylius to comply with the  EU GDPR in regards to data portability.
+Users can navigate to "your-sylius-website/data-portability" to access the plugins functionality.
+
 ### Running plugin tests
-
-  - PHPUnit
-
-    ```bash
-    $ bin/phpunit
-    ```
-
-  - PHPSpec
-
-    ```bash
-    $ bin/phpspec run
-    ```
 
   - Behat (non-JS scenarios)
 
@@ -65,19 +45,3 @@
         ```bash
         $ bin/behat --tags="@javascript"
         ```
-
-### Opening Sylius with your plugin
-
-- Using `test` environment:
-
-    ```bash
-    $ (cd tests/Application && bin/console sylius:fixtures:load -e test)
-    $ (cd tests/Application && bin/console server:run -d web -e test)
-    ```
-    
-- Using `dev` environment:
-
-    ```bash
-    $ (cd tests/Application && bin/console sylius:fixtures:load -e dev)
-    $ (cd tests/Application && bin/console server:run -d web -e dev)
-    ```
