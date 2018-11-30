@@ -11,7 +11,6 @@ declare(strict_types=1);
 
 namespace Superbox\SyliusDataPortabilityPlugin\Controller;
 
-use Superbox\SyliusDataPortabilityPlugin\Services\DataAggregator;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -20,17 +19,17 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-use Sylius\Component\Resource\Repository\RepositoryInterface;
-
 final class DataPortabilityController extends Controller
 {
     /**
+     * @param Request $request
      * @return Response
      */
     public function dataPortabilityAction(Request $request)
     {
         $defaultData = array();
 
+        // Ensures that a valid e-mail was filled in
         $form = $this->createFormBuilder($defaultData)
             ->add('email', EmailType::class, array(
                 'constraints' => array(
@@ -44,15 +43,13 @@ final class DataPortabilityController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
-           // $userData = $this->collectData($form->getData()['email']);
-            // Transform and send data
             $dataAggregator = $this->get('app.services.data_aggregator');
             $dataAggregator->collectData($form->getData()['email']);
 
+            // Sends an E-Mail to the provided address if data linked to it was found and then unlinks the data file for security reasons
             if (file_exists($form->getData()['email'].'.csv')) {
                 $this->get('sylius.email_sender')->send('data_portability', array($form->getData()['email']), array(), array($form->getData()['email'] . '.csv'));
-             #   unlink($form->getData()['email'].'.csv');
+                unlink($form->getData()['email'].'.csv');
             }
 
             $this->addFlashMessage('success','superbox.data_portability.success');
@@ -63,6 +60,7 @@ final class DataPortabilityController extends Controller
                 'form' => $form->createView()));
     }
 
+    // Message for the user that he successfully submitted a valid e-mail address
     private function addFlashMessage(string $type, string $message)
     {
         $locale = $this->get('sylius.context.locale')->getLocaleCode();

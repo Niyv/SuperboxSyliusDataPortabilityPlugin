@@ -17,6 +17,26 @@
 This is an out-of-the-box basic plugin for Sylius to comply with the  EU GDPR in regards to data portability.
 Users can navigate to "your-sylius-website/data-portability" to access the plugins functionality.
 
+On entering their e-mail address, the plugin will gather all related data to that e-mail in the existing database and 
+send it as an e-mail attachment to the supplied address.
+
+The following data is gathered and send out:
+
+Tables: 
+
+    sylius_customer;
+    sylius_address;
+    sylius_shop_user;
+    sylius_order;
+    sylius_address_log_entry;
+    sylius_payment;
+    sylius_product_review;
+
+Fields:
+
+
+    'email', 'firstName', 'lastName', 'birthday', 'gender', 'phoneNumber', 'company', 'countryCode', 'street', 'city', 'postcode', 'username', 'title', 'rating',  'comment',
+
 ### Running plugin tests
 
   - Behat (non-JS scenarios)

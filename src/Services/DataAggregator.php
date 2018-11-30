@@ -32,6 +32,10 @@ class DataAggregator
         $this->container = $container;
     }
 
+    /**
+     * Gathers all data stored in the database linked to the supplied email and saves it in CSV format
+     * @param string $email
+     */
     public function collectData(string $email)
     {
         $repositoryNames = array(
@@ -59,8 +63,6 @@ class DataAggregator
             $userData['orders'] = $repositories['order']->findBy(['customer' => $userData['customer']]);
             $userData['payments'] = $repositories['payment']->findBy(['order' => $userData['orders']]);
             $userData['reviews'] = $repositories['product_review']->findBy(['author' => $userData['customer']]);
-            // Add reviewed product for reference
-
 
         $whitelist = array(
             'email',
@@ -78,7 +80,6 @@ class DataAggregator
             'title',
             'rating',
             'comment',
-            #'createdAt'
         );
 
         $filteredData = array();
@@ -98,11 +99,15 @@ class DataAggregator
            }
         }
         fclose($fp);
-
-
         }
     }
 
+    /**
+     * Function to shorten finding of repositories
+     *
+     * @param string $repositoryName
+     * @return RepositoryInterface
+     */
     private function findRepository(string $repositoryName): RepositoryInterface
     {
         $repositoryName = sprintf('sylius.repository.%s', $repositoryName);
@@ -124,24 +129,6 @@ class DataAggregator
             $array,
             array_flip($whitelist)
         );
-    }
-
-    /**
-     * Filter an array based on a black list of keys
-     *
-     * @param array $array
-     * @param array $keys
-     *
-     * @return array
-     */
-    function arrayBlacklist( array $array, array $keys ) {
-        foreach ( $array as $key => $value ) {
-            if ( in_array( $key, $keys ) ) {
-                unset( $array[ $key ] );
-            }
-        }
-
-        return $array;
     }
 
     /**
